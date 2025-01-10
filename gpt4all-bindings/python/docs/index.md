@@ -1,32 +1,28 @@
-# GPT4All with Python
+# GPT4All Documentation
 
-In this package, we introduce Python bindings built around GPT4All's C/C++ model backends.
+GPT4All runs large language models (LLMs) privately on everyday desktops & laptops. 
 
-## Quickstart
+No API calls or GPUs required - you can just download the application and [get started](gpt4all_desktop/quickstart.md#quickstart).
 
-```bash
-pip install gpt4all
-```
+!!! note "Desktop Application"
+    GPT4All runs LLMs as an application on your computer. Nomic's embedding models can bring information from your local documents and files into your chats. It's fast, on-device, and completely **private**.
 
-In Python, run the following commands to retrieve a GPT4All model and generate a response
-to a prompt.
+    <div style="text-align: center; margin-top: 20px;">
+        [Download for Windows](https://gpt4all.io/installers/gpt4all-installer-win64.exe) &nbsp;&nbsp;&nbsp;&nbsp;
+        [Download for Mac](https://gpt4all.io/installers/gpt4all-installer-darwin.dmg) &nbsp;&nbsp;&nbsp;&nbsp;
+        [Download for Linux](https://gpt4all.io/installers/gpt4all-installer-linux.run)
+    </div>
 
-**Download Note*:**
-By default, models are stored in `~/.cache/gpt4all/` (you can change this with `model_path`). If the file already exists, model download will be skipped.
+!!! note "Python SDK"
+    Use GPT4All in Python to program with LLMs implemented with the [`llama.cpp`](https://github.com/ggerganov/llama.cpp) backend and [Nomic's C backend](https://github.com/nomic-ai/gpt4all/tree/main/gpt4all-backend). Nomic contributes to open source software like [`llama.cpp`](https://github.com/ggerganov/llama.cpp) to make LLMs accessible and efficient **for all**.
 
-```python
-import gpt4all
-gptj = gpt4all.GPT4All("ggml-gpt4all-j-v1.3-groovy")
-messages = [{"role": "user", "content": "Name 3 colors"}]
-gptj.chat_completion(messages)
-```
+    ```bash
+    pip install gpt4all
+    ```
 
-## Give it a try!
-[Google Colab Tutorial](https://colab.research.google.com/drive/1QRFHV5lj1Kb7_tGZZGZ-E6BfX6izpeMI?usp=sharing)
-
-
-## Best Practices
-GPT4All models are designed to run locally on your own CPU. Large prompts may require longer computation time and
-result in worse performance. Giving an instruction to the model will typically produce the best results.
-
-There are two methods to interface with the underlying language model, `chat_completion()` and `generate()`. Chat completion formats a user-provided message dictionary into a prompt template (see API documentation for more details and options). This will usually produce much better results and is the approach we recommend. You may also prompt the model with `generate()` which will just pass the raw input string to the model. 
+    ```python
+    from gpt4all import GPT4All
+    model = GPT4All("Meta-Llama-3-8B-Instruct.Q4_0.gguf") # downloads / loads a 4.66GB LLM
+    with model.chat_session():
+        print(model.generate("How can I run LLMs efficiently on my laptop?", max_tokens=1024))
+    ```
